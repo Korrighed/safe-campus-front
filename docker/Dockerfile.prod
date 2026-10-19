@@ -1,4 +1,4 @@
-# Build multi-stage : image de prod, buildee par Dockploy a partir de
+# Build multi-stage : image de prod, buildee a partir de
 # docker-compose.prod.yml. Dockerfile/start-container a la racine restent le
 # stack de dev (npm install + npm run dev sur bind mount).
 
