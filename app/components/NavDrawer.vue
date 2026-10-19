@@ -200,7 +200,7 @@ function goToLegal(path: '/mentions-legales' | '/cgu') {
 
         <!-- Pied de page -->
         <div class="drawer-footer">
-          <span>Safe Campus · UNC 2025</span>
+          <span>Safe Campus · UNC 2026</span>
         </div>
 
       </div>
