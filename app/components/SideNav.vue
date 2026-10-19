@@ -293,7 +293,7 @@ onBeforeUnmount(() => {
           </ul>
         </div>
 
-        <div class="sidenav__panel-foot">Safe Campus · UNC 2025</div>
+        <div class="sidenav__panel-foot">Safe Campus · UNC 2026</div>
       </div>
     </Transition>
   </div>
