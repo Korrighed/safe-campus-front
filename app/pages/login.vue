@@ -59,5 +59,9 @@ async function onSubmit() {
         </button>
       </form>
     </div>
+
+    <div class="login__footer">
+      <SiteFooter />
+    </div>
   </div>
 </template>

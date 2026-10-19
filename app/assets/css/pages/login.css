@@ -7,7 +7,8 @@
   align-items: center;
   justify-content: center;
   min-height: 100dvh;
-  padding: 24px;
+  /* Bas plus large : reserve la place du footer (absolu) sous la carte. */
+  padding: 24px 24px 96px;
   overflow: hidden;
   background-color: var(--color-primary);
 }
@@ -119,4 +120,28 @@
 .login__submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* Footer (liens legaux) plaque en bas, sur le fond sombre : on neutralise le
+   fond clair du SiteFooter et on passe les textes en clair. */
+.login__footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.login__footer .home-footer {
+  background: transparent;
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+.login__footer .home-footer__copyright,
+.login__footer .home-footer__links a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login__footer .home-footer__links a:hover {
+  color: #fff;
 }
