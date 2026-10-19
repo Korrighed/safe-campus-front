@@ -63,7 +63,7 @@ useHead({ title: `${item.title} — Ressources` })
     <div class="cp-content">
 
       <!-- Fiches réflectives -->
-      <section class="rp-documents">
+      <section v-if="item.documents.length" class="rp-documents">
         <p class="section-label">Fiches réflectives</p>
         <div class="rp-documents-grid">
           <div v-for="doc in item.documents" :key="doc.libelle" class="rp-document-card">
