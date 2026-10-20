@@ -22,7 +22,7 @@
 
 **Component order:** imports → props & emits → state (`ref`/`reactive`) → computed → functions.
 
-**API calls:** `$fetch()` through a composable (`useThemes`, `useAuth`…). Base URL from `useApiBase()`: internal Docker hostname during SSR, `runtimeConfig.public.apiBase` in the browser. The visitor token is stored in the `sc_token` cookie; read requests do not send it yet, because the back's read routes are still public (S-01 in the back's `docs/securite-rgpd.md`). API contracts: [Safe-Campus-back/docs/schema_bd.md](../Safe-Campus-back/docs/schema_bd.md#consommation-api).
+**API calls:** `$fetch()` through a composable (`useThemes`, `useAuth`…). Base URL from `useApiBase()`: internal Docker hostname during SSR, `runtimeConfig.public.apiBase` in the browser. The visitor token is stored in the `sc_token` cookie; read requests do not send it, because the back's read routes are public by design. The visitor login is a prototype-only gate for events, removed at the official launch (§ 4.1 of the back's `docs/securite-rgpd.md`). API contracts: [Safe-Campus-back/docs/schema_bd.md](../Safe-Campus-back/docs/schema_bd.md#consommation-api).
 
 **Navigation:** Nuxt file-based routing (`app/pages/`), `<NuxtLink>` and `navigateTo()`. Global auth middleware: `app/middleware/auth.global.ts`.
 
