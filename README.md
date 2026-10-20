@@ -27,7 +27,7 @@ cd ../Safe-Campus-front && docker compose up -d
 
 Démarre `SC_Back`, `SC_Front`, `SC_Postgres` et `SC_Adminer` (deux stacks compose distinctes, réseau partagé). Voir le [README du back](../Safe-Campus-back/README.md) pour son `.env`.
 
-> ⚠️ Aucune route API n'existe encore côté back (`routes/api.php` absent) — pas d'intégration réelle possible pour l'instant, seulement les deux stacks qui tournent en parallèle.
+> Le front consomme l'API du back : `POST /api/login`, `GET /api/themes`, `GET /api/sous-themes/{ref}`, `GET /api/histoires/{ref}`. Contrats : [schema_bd.md du back](../Safe-Campus-back/docs/schema_bd.md#consommation-api).
 
 ### 2. Frontend seul (sans le back)
 
@@ -91,7 +91,7 @@ Safe-Campus-front/
 ├── docker/
 │   ├── Dockerfile       Image Node 22 (dev)
 │   ├── start-container  npm install puis npm run dev (dev)
-│   └── Dockerfile.prod  Image de prod (multi-stage, buildee par Dockploy)
+│   └── Dockerfile.prod  Image de prod (multi-stage)
 ├── docker-compose.yml       Orchestration dev : sc_front (+ reseau partage avec le back)
 └── docker-compose.prod.yml  Orchestration prod
 ```
@@ -100,11 +100,14 @@ Safe-Campus-front/
 
 ## Déploiement (prod)
 
-`docker-compose.prod.yml` + `docker/Dockerfile.prod` — buildé par Dockploy, stack séparée du dev (`SC_Front_Prod`, pas de réseau partagé avec le back).
+> Aucun hébergeur n'est retenu à ce jour. L'image se déploie sur tout hôte Docker, derrière un reverse proxy TLS fourni par l'hébergement.
+
+`docker-compose.prod.yml` + `docker/Dockerfile.prod`, stack séparée du dev (`SC_Front_Prod`, pas de réseau partagé avec le back).
 
 - Build multi-stage : `npm run build` (Nuxt/Nitro, preset `node-server`) puis image runtime `node:22-slim` qui ne contient que `.output/` — pas de `node_modules` ni de code source à l'exécution.
-- Pas de `NUXT_API_BASE_INTERNAL` en prod (pas de réseau Docker partagé entre les deux stacks Dockploy) : le SSR retombe sur `NUXT_PUBLIC_API_BASE`, qui doit donc pointer vers l'URL **publique** du back.
-- Variables à saisir dans Dockploy : voir [.env.production.example](.env.production.example).
+- Pas de `NUXT_API_BASE_INTERNAL` en prod (pas de réseau Docker partagé entre les stacks back et front) : le SSR retombe sur `NUXT_PUBLIC_API_BASE`, qui doit donc pointer vers l'URL **publique** du back.
+- Variables à saisir dans la configuration de l'hébergement : voir [.env.production.example](.env.production.example).
+- Le conteneur tourne en root (aucune instruction `USER`) : à corriger avant la mise en production (S-12, [securite-rgpd.md du back](../Safe-Campus-back/docs/securite-rgpd.md#10-mesures-complémentaires-à-mettre-en-œuvre)).
 
 ---
 

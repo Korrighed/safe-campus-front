@@ -22,14 +22,9 @@
 
 **Component order:** imports → props & emits → state (`ref`/`reactive`) → computed → functions.
 
-**API calls:** `$fetch()` or axios. Data from backend comes via Inertia props only.
+**API calls:** `$fetch()` through a composable (`useThemes`, `useAuth`…). Base URL from `useApiBase()`: internal Docker hostname during SSR, `runtimeConfig.public.apiBase` in the browser. The visitor token is stored in the `sc_token` cookie; read requests do not send it yet, because the back's read routes are still public (S-01 in the back's `docs/securite-rgpd.md`). API contracts: [Safe-Campus-back/docs/schema_bd.md](../Safe-Campus-back/docs/schema_bd.md#consommation-api).
 
-**Inertia navigation:**
-```vue
-import { Link, router } from '@inertiajs/vue3'
-<Link href="/histoires">  <!-- declarative -->
-router.visit('/histoires')  <!-- programmatic -->
-```
+**Navigation:** Nuxt file-based routing (`app/pages/`), `<NuxtLink>` and `navigateTo()`. Global auth middleware: `app/middleware/auth.global.ts`.
 
 **Icônes :** [Heroicons](https://heroicons.com/) (style *outline*, 24×24, `stroke-width="1.5"`). Fichiers `.svg` sources dans `app/assets/icon/<nom>.svg` (nom = slug Heroicons), récupérés via le CDN jsDelivr (`https://cdn.jsdelivr.net/npm/heroicons@<version>/24/outline/<nom>.svg`) plutôt que copiés à la main. Importés en composant Vue via `vite-svg-loader` (`import IconPhone from '~/assets/icon/phone.svg'` puis `<IconPhone class="..." />`) — jamais de tracé SVG dupliqué en dur dans un template. `fill="none" stroke="currentColor"` pour hériter la couleur du parent.
 

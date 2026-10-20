@@ -14,12 +14,12 @@ services:
             NODE_ENV: production
             PORT: '${FRONT_PORT:-3000}'
             # Pas de NUXT_API_BASE_INTERNAL en prod : back et front sont deux stacks
-            # Dockploy separees, pas de reseau Docker partage comme en dev (`scback`).
+            # separees, pas de reseau Docker partage comme en dev (`scback`).
             # Le SSR retombe sur NUXT_PUBLIC_API_BASE (voir nuxt.config.ts) : le back
             # doit donc etre joignable publiquement sur cette URL.
             NUXT_PUBLIC_API_BASE: '${NUXT_PUBLIC_API_BASE}'
         # Point de depart, pas mesure en charge reelle (a ajuster selon le trafic
-        # observe sur Dockploy). Nettement sous le dev (2G) : plus de serveur Vite/HMR
+        # observe en production). Nettement sous le dev (2G) : plus de serveur Vite/HMR
         # a alimenter, juste le serveur Nitro bundle (cf. docs/infra.md du back pour
         # la mesure au repos en dev, 275 MiB, essentiellement due a Vite).
         deploy:
