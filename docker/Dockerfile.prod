@@ -24,6 +24,10 @@ ENV NODE_ENV=production
 # node_modules ni du code source a l'execution.
 COPY --from=build /app/.output ./.output
 
+# Utilisateur non root fourni par l'image node. .output/ reste a root : lisible,
+# non modifiable par le processus.
+USER node
+
 EXPOSE ${FRONT_PORT}
 
 CMD ["node", ".output/server/index.mjs"]

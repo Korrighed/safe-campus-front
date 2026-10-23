@@ -6,9 +6,7 @@ set -e
 if [ $# -gt 0 ]; then
     exec "$@"
 else
-    # le volume nomme sc_front_node_modules est cree par root au premier montage,
-    # il faut le rendre a nuxt avant d'installer les dependances
-    sudo chown -R nuxt:nuxt /app/node_modules
+    # sc_front_node_modules appartient a nuxt des sa creation (voir Dockerfile)
     npm install
     exec npm run dev
 fi
