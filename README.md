@@ -107,7 +107,7 @@ Safe-Campus-front/
 - Build multi-stage : `npm run build` (Nuxt/Nitro, preset `node-server`) puis image runtime `node:22-slim` qui ne contient que `.output/` — pas de `node_modules` ni de code source à l'exécution.
 - Pas de `NUXT_API_BASE_INTERNAL` en prod (pas de réseau Docker partagé entre les stacks back et front) : le SSR retombe sur `NUXT_PUBLIC_API_BASE`, qui doit donc pointer vers l'URL **publique** du back.
 - Variables à saisir dans la configuration de l'hébergement : voir [.env.production.example](.env.production.example).
-- Le conteneur tourne avec l'utilisateur non root `node`, fourni par l'image (S-12, [securite-rgpd.md du back](../Safe-Campus-back/docs/securite-rgpd.md#10-mesures-complémentaires-à-mettre-en-œuvre)).
+- Le conteneur tourne avec l'utilisateur non root `node`, fourni par l'image. `.output/` appartient à root : le processus ne peut pas le modifier (S-12, [securite-rgpd.md du back](../Safe-Campus-back/docs/securite-rgpd.md#8-infrastructure-et-déploiement)). En dev, le conteneur tourne avec l'utilisateur `nuxt`, sans `sudo`.
 
 ---
 
