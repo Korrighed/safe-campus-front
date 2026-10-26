@@ -6,7 +6,7 @@ definePageMeta({ layout: 'default' })
   <div class="legal-page">
     <div class="legal-page__content">
       <h1 class="legal-page__title">Mentions légales</h1>
-      <p class="legal-page__updated">Dernière mise à jour : 20 octobre 2026</p>
+      <p class="legal-page__updated">Dernière mise à jour : 26 octobre 2026</p>
 
       <section class="legal-page__section">
         <h2 class="legal-page__section-title">Statut du site</h2>
@@ -61,8 +61,16 @@ definePageMeta({ layout: 'default' })
       <section class="legal-page__section">
         <h2 class="legal-page__section-title">Données personnelles</h2>
         <p>
-          Safe Campus ne collecte aucune donnée personnelle identifiante dans le cadre de son
-          usage courant. Le compte d'accès visiteur est un compte partagé, non nominatif.
+          Safe Campus ne crée aucun compte nominatif pour les visiteurs. Pendant le prototype,
+          l'accès se fait par un compte visiteur partagé et un cookie technique, retirés à la mise
+          en production. Le site fait appel à des
+          services tiers qui reçoivent l'adresse IP de votre navigateur (polices, cartes). Il
+          affiche par ailleurs les coordonnées professionnelles de référents nommés de
+          l'annuaire.
+        </p>
+        <p>
+          Données, durées de conservation et droits :
+          <NuxtLink to="/donnees-personnelles">page Données personnelles</NuxtLink>.
         </p>
         <p>
           Pour toute question relative aux données personnelles : délégué·e à la protection des

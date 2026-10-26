@@ -53,6 +53,41 @@
   color: var(--color-primary-light);
 }
 
+.legal-page__table-wrap {
+  overflow-x: auto;
+  margin-bottom: 14px;
+}
+
+.legal-page__table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+
+.legal-page__table th,
+.legal-page__table td {
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(13, 13, 13, 0.1);
+}
+
+.legal-page__table thead th {
+  color: var(--color-primary);
+  font-weight: 700;
+  border-bottom-width: 2px;
+}
+
+.legal-page__table tbody th {
+  font-weight: 600;
+}
+
+.legal-page__section code {
+  font-size: 0.9em;
+}
+
 .legal-page__placeholder {
   color: var(--color-muted);
   font-style: italic;

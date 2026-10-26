@@ -4,6 +4,7 @@
     <nav class="home-footer__links">
       <NuxtLink to="/mentions-legales">Mentions légales</NuxtLink>
       <NuxtLink to="/cgu">CGU</NuxtLink>
+      <NuxtLink to="/donnees-personnelles">Données personnelles</NuxtLink>
     </nav>
   </footer>
 </template>
