@@ -1,9 +1,9 @@
 # CI du front.
 #
-# verif      : toujours. Build et typecheck. Doit etre vert avant de pousser
-#              sur dev.
-# approfondi : PR vers main et push sur main. Lint, audit npm, build de l'image
-#              de prod, demarrage de l'image et controle HTTP, scan Trivy.
+# verif      : toujours. Build, typecheck et lint. Doit etre vert avant de
+#              pousser sur dev.
+# approfondi : PR vers main et push sur main. Audit npm, build de l'image de
+#              prod, demarrage de l'image et controle HTTP, scan Trivy.
 
 name: CI
 
@@ -43,6 +43,11 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      # Apres le build : eslint.config.mjs importe .nuxt/eslint.config.mjs,
+      # genere par Nuxt.
+      - name: Lint
+        run: npm run lint
+
   approfondi:
     name: approfondi
     if: github.base_ref == 'main' || github.ref == 'refs/heads/main'
@@ -58,12 +63,6 @@ jobs:
 
       - name: Installer les dependances
         run: npm ci
-
-      # eslint.config.mjs importe .nuxt/eslint.config.mjs, genere par nuxt prepare.
-      - name: Lint
-        run: |
-          npx nuxt prepare
-          npm run lint
 
       # Bloquant : critical. Les "high" de la chaine d'outillage Nuxt (voir
       # docs/securite-rgpd.md du back, § 9) restent visibles sans bloquer.
