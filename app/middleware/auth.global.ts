@@ -1,6 +1,6 @@
 // Pages accessibles sans mot de passe visiteur : la connexion elle-meme et les
 // pages legales, qui doivent rester lisibles par tout le monde (LCEN).
-const PUBLIC_PATHS = ['/login', '/mentions-legales', '/cgu']
+const PUBLIC_PATHS = ['/login', '/mentions-legales', '/cgu', '/donnees-personnelles']
 
 export default defineNuxtRouteMiddleware((to) => {
   if (PUBLIC_PATHS.includes(to.path)) return

@@ -112,7 +112,7 @@ function goToAbout() {
   goToSection('#about')
 }
 
-function goToLegal(path: '/mentions-legales' | '/cgu') {
+function goToLegal(path: '/mentions-legales' | '/cgu' | '/donnees-personnelles') {
   closeAll()
   navigateTo(path)
 }
@@ -288,6 +288,12 @@ onBeforeUnmount(() => {
               <button type="button" class="sidenav__rowmain sidenav__rowmain--solo" @click="goToLegal('/cgu')">
                 <IconInformationCircle width="16" height="16" />
                 <span class="sidenav__rowlabel">CGU</span>
+              </button>
+            </li>
+            <li class="sidenav__node">
+              <button type="button" class="sidenav__rowmain sidenav__rowmain--solo" @click="goToLegal('/donnees-personnelles')">
+                <IconShieldCheck width="16" height="16" />
+                <span class="sidenav__rowlabel">Données personnelles</span>
               </button>
             </li>
           </ul>

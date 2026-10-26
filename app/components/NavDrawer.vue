@@ -76,7 +76,7 @@ function scrollToIntro() {
   scrollToSection('.home-intro')
 }
 
-function goToLegal(path: '/mentions-legales' | '/cgu') {
+function goToLegal(path: '/mentions-legales' | '/cgu' | '/donnees-personnelles') {
   close()
   navigateTo(path)
 }
@@ -141,6 +141,10 @@ function goToLegal(path: '/mentions-legales' | '/cgu') {
                 </li>
                 <li class="drawer-item drawer-item--secondary" @click="goToLegal('/cgu')">
                   <span class="item-label">CGU</span>
+                  <IconChevronRight class="item-chevron" width="16" height="16" />
+                </li>
+                <li class="drawer-item drawer-item--secondary" @click="goToLegal('/donnees-personnelles')">
+                  <span class="item-label">Données personnelles</span>
                   <IconChevronRight class="item-chevron" width="16" height="16" />
                 </li>
               </ul>
