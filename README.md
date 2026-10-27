@@ -74,6 +74,10 @@ Copier `.env.example` en `.env` :
 
 > Dans le stack Docker, `NUXT_PUBLIC_API_BASE` est injecté par le `docker-compose.yml` de ce repo (calculé à partir de `APP_PORT`, qui doit correspondre à la valeur du `.env` du back).
 
+Deux adresses d'API coexistent : `NUXT_PUBLIC_API_BASE` pour le **navigateur**, `NUXT_API_BASE_INTERNAL` pour le **rendu côté serveur** (`useApiBase`). En dev, le `docker-compose.yml` fixe la seconde sur le nom du conteneur du back. En prod, voir la section Déploiement.
+
+Les fichiers `.env.*` réels sont ignorés par git et par Docker (`.gitignore`, `.dockerignore`) ; seuls `.env.example` et `.env.production.example` sont suivis.
+
 ---
 
 ## Structure
@@ -100,14 +104,35 @@ Safe-Campus-front/
 
 ## Déploiement (prod)
 
-> Aucun hébergeur n'est retenu à ce jour. L'image se déploie sur tout hôte Docker, derrière un reverse proxy TLS fourni par l'hébergement.
+> Aucun hébergeur de production n'est retenu. L'image se déploie sur tout hôte Docker, derrière un reverse proxy TLS fourni par l'hébergement. Une **démo publique temporaire** tourne sur Render (offre gratuite) avec le back et une base Neon : procédure complète, variables et pièges dans [docs/deploiement-render.md](https://github.com/Korrighed/safe-campus-back/blob/main/docs/deploiement-render.md) du dépôt back.
 
 `docker-compose.prod.yml` + `docker/Dockerfile.prod`, stack séparée du dev (`SC_Front_Prod`, pas de réseau partagé avec le back).
 
 - Build multi-stage : `npm run build` (Nuxt/Nitro, preset `node-server`) puis image runtime `node:22-slim` qui ne contient que `.output/` — pas de `node_modules` ni de code source à l'exécution.
-- Pas de `NUXT_API_BASE_INTERNAL` en prod (pas de réseau Docker partagé entre les stacks back et front) : le SSR retombe sur `NUXT_PUBLIC_API_BASE`, qui doit donc pointer vers l'URL **publique** du back.
+- Pas de réseau Docker partagé entre les stacks back et front en prod : `NUXT_PUBLIC_API_BASE` **et** `NUXT_API_BASE_INTERNAL` doivent pointer vers l'URL **publique** du back.
+- **`NUXT_API_BASE_INTERNAL` est obligatoire en prod, à l'exécution.** `nuxt.config.ts` calcule sa valeur par défaut au build, quand `NUXT_PUBLIC_API_BASE` n'est pas encore fournie : le rendu serveur interroge alors `http://localhost:8000` et les pages de contenu répondent 404 « Rubrique introuvable ». Un rebuild n'y change rien.
 - Variables à saisir dans la configuration de l'hébergement : voir [.env.production.example](.env.production.example).
+- Sur Render : service Docker, branche `main`, région du back (Oregon), Dockerfile `./docker/Dockerfile.prod`, `PORT=3000`, Health Check Path `/mentions-legales` (et non `/healthz`, qui n'existe pas), Auto-Deploy désactivé.
 - Le conteneur tourne avec l'utilisateur non root `node`, fourni par l'image. `.output/` appartient à root : le processus ne peut pas le modifier (S-12, [securite-rgpd.md du back](../Safe-Campus-back/docs/securite-rgpd.md#8-infrastructure-et-déploiement)). En dev, le conteneur tourne avec l'utilisateur `nuxt`, sans `sudo`.
+
+Limites connues du front en ligne (suivi dans le [securite-rgpd.md](../Safe-Campus-back/docs/securite-rgpd.md) du back, § 10) :
+
+- aucun en-tête de sécurité HTTP posé par le front (S-05) et l'en-tête `x-powered-by: Nuxt` est exposé ;
+- le cookie `sc_token` du portillon n'a pas l'attribut `Secure` ni `HttpOnly` (S-04, S-17) ;
+- les polices viennent de Google Fonts (S-08).
+
+---
+
+## Intégration continue
+
+Le workflow `.github/workflows/ci.yml` (GitHub Actions) s'exécute sur les push et les pull requests vers `dev` et `main`.
+
+| Job | Quand | Contrôles |
+|---|---|---|
+| `verif` | Toujours | `npm ci`, `npm run build`, `npm run typecheck`, `npm run lint` |
+| `approfondi` | PR vers `main`, push sur `main`, lancement manuel depuis `main` | `npm audit` (bloquant en *critical*, affichage seul pour *high*), build de l'image de prod, démarrage et contrôle de `/mentions-legales`, scan Trivy |
+
+Lancer `npm run typecheck && npm run lint` en local avant de pousser évite un aller-retour. `main` est protégée : PR obligatoire, checks `verif` et `approfondi` verts. Détails et réglages GitHub : [docs/ci.md](https://github.com/Korrighed/safe-campus-back/blob/main/docs/ci.md) du dépôt back.
 
 ---
 
