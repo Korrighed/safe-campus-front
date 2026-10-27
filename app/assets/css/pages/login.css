@@ -1,0 +1,147 @@
+/* ============================================================
+   Page — Connexion visiteur (/login)
+   ============================================================ */
+.login {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  /* Bas plus large : reserve la place du footer (absolu) sous la carte. */
+  padding: 24px 24px 96px;
+  overflow: hidden;
+  background-color: var(--color-primary);
+}
+
+.login__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+}
+
+.login__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(30, 70, 107, 0.75), rgba(13, 13, 13, 0.88));
+}
+
+.login__card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  max-width: 360px;
+  padding: 44px 32px 36px;
+  border-radius: var(--radius-card);
+  background-color: var(--color-bg);
+  box-shadow: 0 20px 60px rgba(13, 13, 13, 0.35);
+  text-align: center;
+}
+
+.login__logo {
+  width: 160px;
+  height: auto;
+}
+
+.login__subtitle {
+  margin-top: 8px;
+  margin-bottom: 12px;
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  color: var(--color-muted);
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.login__label {
+  align-self: center;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.login__input {
+  width: 100%;
+  padding: 12px 18px;
+  border: 1px solid rgba(13, 13, 13, 0.15);
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  text-align: center;
+  transition: border-color var(--transition-base);
+}
+
+.login__input:focus-visible {
+  outline: none;
+  border-color: var(--color-primary-light);
+}
+
+.login__input--error {
+  border-color: #c0392b;
+}
+
+.login__error {
+  font-size: var(--fs-sm);
+  color: #c0392b;
+}
+
+.login__submit {
+  margin-top: 4px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 100px;
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter var(--transition-base), opacity var(--transition-base);
+}
+
+.login__submit:hover:not(:disabled),
+.login__submit:focus-visible {
+  filter: brightness(1.15);
+}
+
+.login__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Footer (liens legaux) plaque en bas, sur le fond sombre : on neutralise le
+   fond clair du SiteFooter et on passe les textes en clair. */
+.login__footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.login__footer .home-footer {
+  background: transparent;
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+.login__footer .home-footer__copyright,
+.login__footer .home-footer__links a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login__footer .home-footer__links a:hover {
+  color: #fff;
+}

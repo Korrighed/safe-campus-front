@@ -1,0 +1,311 @@
+/* ============================================================
+   Page ressource (contact/fiche)
+   ============================================================ */
+.cp-page {
+  width: 100%;
+  min-height: 100dvh;
+  background: linear-gradient(160deg,
+      var(--theme-color, var(--color-primary-light)) 0%,
+      color-mix(in srgb, var(--theme-color, var(--color-primary-light)) 65%, #0D0D2E) 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Contenu ── */
+.cp-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 8px 20px 72px;
+}
+
+/* Texte + carte : empiles en mobile, cote a cote en desktop (voir media query).
+   Le titre et le ninja restent au-dessus, dans .cp-hero. */
+.cp-main {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 40px 20px 56px;
+}
+
+.cp-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.cp-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Hero ── */
+.cp-hero {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 8px 20px 8px;
+}
+
+.cp-hero-ninja-wrap {
+  position: relative;
+  align-self: center;
+  margin-bottom: 4px;
+}
+
+.cp-hero-ninja-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, transparent 70%);
+  filter: blur(8px);
+  z-index: 0;
+}
+
+.cp-hero-ninja {
+  position: relative;
+  z-index: 1;
+  width: 180px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 12px 24px rgba(13, 13, 13, 0.25));
+}
+
+.cp-tag {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--color-text-light);
+  font-family: var(--font-heading);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 5px 12px;
+  border-radius: 100px;
+}
+
+.cp-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  color: var(--color-text-light);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.cp-description {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cp-hero-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.btn-story {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: color-mix(in srgb, #0D0D2E 55%, var(--theme-color, var(--color-primary-light)));
+  color: var(--color-text-light);
+  border: none;
+  border-radius: 100px;
+  padding: 12px 22px;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter var(--transition-base);
+}
+
+.btn-story:hover,
+.btn-story:focus-visible {
+  filter: brightness(1.15);
+}
+
+
+/* ── Contacts ── */
+.section-label {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lead);
+  font-weight: 800;
+  color: var(--color-text-light);
+  padding-left: 4px;
+}
+
+.cp-contacts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .cp-contacts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-items: start;
+  }
+}
+
+
+/* ── Fiches réflectives (page ressources) ── */
+.rp-documents {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rp-documents-grid {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-card-bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.rp-document-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-bottom: 1px solid #EEEEF3;
+}
+
+.rp-document-card:last-child {
+  border-bottom: none;
+}
+
+.rp-document-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--theme-color, var(--color-primary-light)) 12%, transparent);
+  color: var(--theme-color, var(--color-primary-light));
+}
+
+.rp-document-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.rp-document-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.rp-document-title {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: #1A1A2E;
+  line-height: 1.3;
+}
+
+.rp-document-desc {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--color-muted);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+.btn-download {
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--theme-color, var(--color-primary-light)) 12%, transparent);
+  color: var(--theme-color, var(--color-primary-light));
+  border: none;
+  border-radius: 100px;
+  padding: 8px 14px;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-download:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+/* ── Desktop ── */
+@media (min-width: 1024px) {
+  .cp-hero {
+    max-width: 760px;
+    padding-top: 32px;
+  }
+
+  .cp-title {
+    font-size: 2.375rem;
+  }
+
+  .rp-document-card {
+    padding: 18px 22px;
+  }
+
+  /* Texte a gauche, carte rectangulaire a droite, meme hauteur (align-items:
+     stretch) pour que les deux colonnes soient alignees haut et bas. */
+  .cp-main {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    gap: 56px;
+    padding: 96px 20px 96px;
+  }
+
+  .cp-main .cp-intro {
+    flex: 1 1 52%;
+    max-width: 560px;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    gap: 20px;
+  }
+
+  .cp-main .cp-description {
+    font-size: var(--fs-lead);
+    line-height: 1.75;
+  }
+
+  /* La carte agrandie est teleportee hors de .cp-main : ces regles ne
+     s'appliquent plus, .cp-location--expanded prend le relais. */
+  .cp-main .cp-location-wrap {
+    flex: 1 1 48%;
+    max-width: 600px;
+    min-height: 340px;
+    max-height: 520px;
+  }
+
+  .cp-main .cp-location {
+    flex: 1;
+  }
+
+  .cp-main .cp-location-map {
+    height: 100%;
+  }
+}

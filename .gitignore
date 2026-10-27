@@ -3,10 +3,12 @@
 .output/
 dist/
 
-# Env
+# Env : tout fichier d'environnement reste hors du depot, seuls les exemples
+# sans valeur reelle sont suivis.
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+!.env.production.example
 
 # Dependencies
 node_modules/

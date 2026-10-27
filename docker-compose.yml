@@ -1,0 +1,46 @@
+services:
+    sc_front:
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+            args:
+                WWWUSER: '${WWWUSER:-1000}'
+                WWWGROUP: '${WWWGROUP:-1000}'
+                FRONT_PORT: '${FRONT_PORT:-3000}'
+        container_name: SC_Front
+        ports:
+            - '${FRONT_PORT:-3000}:${FRONT_PORT:-3000}'
+        volumes:
+            - '.:/app'
+            - 'sc_front_node_modules:/app/node_modules'
+        environment:
+            NODE_ENV: development
+            PORT: '${FRONT_PORT:-3000}'
+            # SSR (dans le conteneur) : hostname Docker interne, joignable si la stack
+            # back tourne et partage le reseau `scback` (voir networks ci-dessous). Le
+            # port doit correspondre a APP_PORT du back (ce repo ne le connait pas
+            # directement : a synchroniser a la main entre les deux .env).
+            NUXT_API_BASE_INTERNAL: 'http://sc_back:${APP_PORT:-8000}'
+            # Navigateur (hors Docker) : port publie sur l'hote par la stack back.
+            NUXT_PUBLIC_API_BASE: 'http://localhost:${APP_PORT:-8000}'
+        networks:
+            - scback
+        deploy:
+            resources:
+                limits:
+                    cpus: '2'
+                    memory: 2G
+                reservations:
+                    memory: 1G
+
+networks:
+    scback:
+        # Nom fixe : partage le reseau avec le docker-compose.yml de Safe-Campus-back,
+        # que la stack back ou front soit demarree en premier. Sans le back, sc_back
+        # reste injoignable (SSR degrade) mais la stack front demarre quand meme.
+        name: scback
+        driver: bridge
+
+volumes:
+    sc_front_node_modules:
+        driver: local

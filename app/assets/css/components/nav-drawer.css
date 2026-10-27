@@ -1,0 +1,317 @@
+/* ============================================================
+   NavDrawer
+   ============================================================ */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(13, 13, 13, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  max-width: 85vw;
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(160deg, #1a3f62 0%, #0f2741 100%);
+  box-shadow: 4px 0 40px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.drawer-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-caption);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.drawer-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--color-text-light);
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color var(--transition-base);
+}
+
+.drawer-back:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: background var(--transition-base), color var(--transition-base);
+  flex-shrink: 0;
+}
+
+.drawer-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--color-text-light);
+}
+
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+  scrollbar-width: none;
+}
+
+.drawer-body::-webkit-scrollbar {
+  display: none;
+}
+
+.drawer-section-label {
+  font-family: var(--font-heading);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.35);
+  padding: 16px 20px 6px;
+  text-transform: uppercase;
+}
+
+.drawer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.drawer-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background var(--transition-base);
+  position: relative;
+  border-left: 3px solid transparent;
+}
+
+.drawer-item::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.drawer-item:last-child::after {
+  display: none;
+}
+
+.drawer-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-left-color: #4260e6;
+}
+
+.drawer-item:active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.drawer-item--secondary {
+  opacity: 0.75;
+}
+
+.drawer-item--secondary:hover {
+  opacity: 1;
+}
+
+.drawer-item--sub {
+  padding: 12px 20px;
+}
+
+.item-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.item-label {
+  flex: 1;
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--color-text-light);
+  line-height: 1.2;
+}
+
+.item-count {
+  font-family: var(--font-heading);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+
+.item-chevron {
+  color: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+  transition: transform var(--transition-base), color var(--transition-base);
+}
+
+.drawer-item:hover .item-chevron {
+  color: rgba(255, 255, 255, 0.7);
+  transform: translateX(3px);
+}
+
+.sub-item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.item-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.04em;
+}
+
+.drawer-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 12px 20px;
+}
+
+.sublevel-head {
+  padding: 16px 20px 8px;
+  border-left: 3px solid var(--theme-c, #4260e6);
+  margin: 8px 20px 0;
+  border-radius: 0 6px 6px 0;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sublevel-label {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lead);
+  font-weight: 800;
+  color: var(--color-text-light);
+  line-height: 1;
+}
+
+.sublevel-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 20px 8px;
+  padding: 12px 18px;
+  background: rgba(66, 96, 230, 0.2);
+  border: 1px solid rgba(66, 96, 230, 0.4);
+  border-radius: 12px;
+  color: #8fa8f8;
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition-base), color var(--transition-base);
+  width: calc(100% - 40px);
+  justify-content: center;
+}
+
+.sublevel-all-btn:hover {
+  background: rgba(66, 96, 230, 0.35);
+  color: var(--color-text-light);
+}
+
+.drawer-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.drawer-footer span {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.28s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.drawer-slide-enter-active,
+.drawer-slide-leave-active {
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.drawer-slide-enter-from,
+.drawer-slide-leave-to {
+  transform: translateX(-100%);
+}
+
+.level-enter-active,
+.level-leave-active {
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.level-enter-from {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.level-leave-to {
+  opacity: 0;
+  transform: translateX(-16px);
+}
+
+.head-swap-enter-active,
+.head-swap-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.head-swap-enter-from,
+.head-swap-leave-to {
+  opacity: 0;
+}
+
+@media (min-width: 768px) {
+  .drawer {
+    width: 340px;
+  }
+}

@@ -1,0 +1,37 @@
+/* ============================================================
+   SiteFooter
+   ============================================================ */
+.home-footer {
+  flex-shrink: 0;
+  /* Plaque le footer en bas du viewport quand le contenu est court (page
+     histoire en placeholder, par ex.) : les pages parentes (.home, .cp-page)
+     sont des flex column en min-height:100dvh, ce margin absorbe l'espace
+     restant au lieu de laisser le footer coller au contenu. */
+  margin-top: auto;
+  padding: 12px 20px;
+  background: var(--color-bg);
+  border-top: 1px solid rgba(13, 13, 13, 0.08);
+  text-align: center;
+}
+
+.home-footer__copyright {
+  font-size: var(--fs-caption);
+  color: var(--color-muted);
+}
+
+.home-footer__links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.home-footer__links a {
+  font-size: var(--fs-caption);
+  color: var(--color-muted);
+  text-decoration: underline;
+}
+
+.home-footer__links a:hover {
+  color: var(--color-text);
+}

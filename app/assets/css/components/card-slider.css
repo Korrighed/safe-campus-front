@@ -1,0 +1,81 @@
+/* ============================================================
+   CardSlider
+   ============================================================ */
+.slider-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.slider-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 72px 0 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Espaceurs : (50% du conteneur) − (moitié de la carte 240px) */
+.slider-ghost {
+  flex-shrink: 0;
+  width: calc(50% - 128px);
+}
+
+.slider-track>.card-item {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d0d5e8;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background var(--transition-base), width var(--transition-base);
+}
+
+.dot.active {
+  width: 22px;
+  border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+  .slider-wrapper {
+    gap: 8px;
+  }
+
+  .slider-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+    padding: 88px 48px 8px;
+    scroll-snap-type: none;
+    cursor: default;
+    gap: 24px;
+  }
+
+  .slider-ghost {
+    display: none;
+  }
+
+  .slider-dots {
+    display: none;
+  }
+}

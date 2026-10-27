@@ -1,0 +1,37 @@
+/* ============================================================
+   ThemeSection
+   ============================================================ */
+.theme-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding: 0 20px;
+}
+
+.section-bar {
+  display: block;
+  width: 0.75rem;
+  height: 1.5rem;
+  border-radius: 3px;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: #000000;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+@media (min-width: 768px) {
+  .section-header {
+    padding: 0 48px;
+  }
+}

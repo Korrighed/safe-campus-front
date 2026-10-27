@@ -1,26 +1,18 @@
-<script setup>
-defineProps({
-  theme: {
-    type: Object,
-    required: true,
-  },
-})
+<script setup lang="ts">
+import type { ThemeView } from '~/types/annuaire'
 
-const emit = defineEmits(['open-card'])
+defineProps<{
+  theme: ThemeView
+}>()
 </script>
 
 <template>
   <section class="theme-section">
-    <!-- Titre de section -->
     <div class="section-header">
-      <div class="section-pill" :style="{ background: theme.color + '18', color: theme.color }">
-        <span class="section-dot" :style="{ background: theme.color }" />
-        {{ theme.label }}
-      </div>
+      <span class="section-bar" :style="{ backgroundColor: theme.color }"/>
+      <h2 class="section-title">{{ theme.shortLabel }}</h2>
     </div>
 
-    <!-- Slider de cards -->
-    <CardSlider :items="theme.items" :color="theme.color" :themeId="theme.id"
-      @open-card="emit('open-card', { ...$event, themeColor: theme.color })" />
+    <CardSlider :items="theme.items" :color="theme.color" :theme-id="theme.id" />
   </section>
 </template>

@@ -1,0 +1,14 @@
+.git
+.env
+# Aucun fichier d'environnement ne doit entrer dans le contexte de build : les
+# valeurs arrivent par les variables d'environnement de l'hebergeur.
+.env.*
+!.env.example
+!.env.production.example
+node_modules
+.nuxt
+.output
+.qodo
+.claude
+.vscode
+.idea

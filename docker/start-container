@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+# /tmp/.X11-unix est cree et permissionne au build (le conteneur tourne en nuxt)
+
+if [ $# -gt 0 ]; then
+    exec "$@"
+else
+    # sc_front_node_modules appartient a nuxt des sa creation (voir Dockerfile)
+    npm install
+    exec npm run dev
+fi

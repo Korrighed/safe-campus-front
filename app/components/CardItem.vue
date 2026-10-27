@@ -1,40 +1,27 @@
-<script setup>
-defineProps({
-  item: {
-    type: Object,
-    required: true,
-  },
-  color: {
-    type: String,
-    required: true,
-  },
-  themeId: {
-    type: String,
-    required: true,
-  },
-})
+<script setup lang="ts">
+import type { ThemeItemView } from '~/types/annuaire'
 
-const emit = defineEmits(['open'])
+defineProps<{
+  item: ThemeItemView
+  color: string
+  themeId: string
+}>()
 </script>
 
 <template>
-  <article
-    class="card-item"
-    :class="themeId === 'violence' ? 'layout-top' : 'layout-left'"
-    :style="{ '--theme-color': color, '--theme-color-bg': color + '18' }"
-    @click="emit('open', item)"
-  >
-    <!-- Ninja -->
-    <div class="card-ninja">
-      <img :src="item.ninja" :alt="`Ninja mascotte — ${item.title}`" class="ninja-img" />
+  <div class="card-item" :class="`card-item--${item.slug}`" :style="{ '--theme-color': color }">
+    <div class="card-ninja" :class="`card-ninja--${item.slug}`">
+      <img :src="item.ninja" :alt="item.title" class="ninja-img" >
     </div>
-
-    <!-- Contenu -->
-    <div class="card-body">
-      <p class="card-subtitle">{{ item.subtitle }}</p>
-      <button class="card-cta" :aria-label="`En savoir plus sur ${item.title}`">
-        En savoir plus &gt;
-      </button>
+    <h3 class="card-title">{{ item.title }}</h3>
+    <p class="card-desc">{{ item.hook }}</p>
+    <div class="card-actions">
+      <NuxtLink :to="`/contact/${themeId}/${item.slug}`" class="card-actions__btn">
+        Contact
+      </NuxtLink>
+      <NuxtLink :to="`/ressources/${themeId}/${item.slug}`" class="card-actions__btn">
+        Ressources
+      </NuxtLink>
     </div>
-  </article>
+  </div>
 </template>

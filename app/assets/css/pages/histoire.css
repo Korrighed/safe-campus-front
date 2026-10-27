@@ -1,0 +1,155 @@
+/* ============================================================
+   Lecteur d'histoire (/histoire/{theme}/{slug})
+   ============================================================ */
+.histoire {
+  --histoire-favorable-bg: #DDF5E4;
+  --histoire-favorable-text: #14532D;
+  --histoire-defavorable-bg: #FDE3E1;
+  --histoire-defavorable-text: #7F1D1D;
+}
+
+.histoire__content {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 20px 72px;
+}
+
+.histoire__stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.histoire__card {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  color: var(--color-text);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.histoire__image {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  display: block;
+}
+
+.histoire__dialogue {
+  padding: 24px 24px 8px;
+  font-family: var(--font-body);
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+}
+
+.histoire__note {
+  padding: 24px 24px 8px;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  color: var(--color-muted);
+}
+
+.histoire__choix {
+  list-style: none;
+  margin: 0;
+  padding: 16px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.histoire__choix-btn {
+  width: 100%;
+  text-align: left;
+  background: color-mix(in srgb, var(--theme-color, var(--color-primary-light)) 8%, #FFFFFF);
+  color: var(--color-text);
+  border: 2px solid color-mix(in srgb, var(--theme-color, var(--color-primary-light)) 35%, #FFFFFF);
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+}
+
+.histoire__choix-btn:hover,
+.histoire__choix-btn:focus-visible {
+  background: var(--theme-color, var(--color-primary-light));
+  border-color: var(--theme-color, var(--color-primary-light));
+  color: var(--color-text-light);
+}
+
+.histoire__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 24px 24px;
+}
+
+.histoire__fin-label {
+  align-self: flex-start;
+  margin: 24px 24px 0;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--color-muted) 18%, #FFFFFF);
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.histoire__fin--favorable .histoire__fin-label {
+  background: var(--histoire-favorable-bg);
+  color: var(--histoire-favorable-text);
+}
+
+.histoire__fin--defavorable .histoire__fin-label {
+  background: var(--histoire-defavorable-bg);
+  color: var(--histoire-defavorable-text);
+}
+
+.histoire__aide {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.histoire__quitter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-light);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.histoire__quitter:hover,
+.histoire__quitter:focus-visible {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.histoire__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}

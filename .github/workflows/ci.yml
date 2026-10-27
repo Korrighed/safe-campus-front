@@ -1,0 +1,106 @@
+# CI du front.
+#
+# verif      : toujours. Build, typecheck et lint. Doit etre vert avant de
+#              pousser sur dev.
+# approfondi : PR vers main et push sur main. Audit npm, build de l'image de
+#              prod, demarrage de l'image et controle HTTP, scan Trivy.
+
+name: CI
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verif:
+    name: verif
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      # Node 22 : meme version que docker/Dockerfile.prod.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installer les dependances
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # Apres le build : eslint.config.mjs importe .nuxt/eslint.config.mjs,
+      # genere par Nuxt.
+      - name: Lint
+        run: npm run lint
+
+  approfondi:
+    name: approfondi
+    if: github.base_ref == 'main' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installer les dependances
+        run: npm ci
+
+      # Bloquant : critical. Les "high" de la chaine d'outillage Nuxt (voir
+      # docs/securite-rgpd.md du back, § 9) restent visibles sans bloquer.
+      - name: Audit npm (bloquant, critical)
+        run: npm audit --audit-level=critical
+
+      - name: Audit npm (information, high)
+        continue-on-error: true
+        run: npm audit --audit-level=high
+
+      - name: Build de l'image de prod
+        run: docker build -f docker/Dockerfile.prod -t safe-campus-front-sc_front-prod .
+
+      # /mentions-legales est publique (middleware auth.global) : elle rend
+      # sans compte visiteur et sans API joignable.
+      - name: Demarrage de l'image et controle HTTP
+        run: |
+          docker run -d --name sc_front_ci -p 3000:3000 \
+            -e PORT=3000 \
+            -e NUXT_PUBLIC_API_BASE=https://api.ci.invalid \
+            safe-campus-front-sc_front-prod
+          # --retry-all-errors : le proxy de port Docker accepte la connexion puis
+          # la coupe (reset) tant que Nitro n'ecoute pas. --retry-connrefused ne suffit pas.
+          curl --fail --silent --show-error --retry 15 --retry-delay 2 --retry-all-errors \
+            http://127.0.0.1:3000/mentions-legales > /dev/null
+
+      - name: Scan Trivy de l'image
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: safe-campus-front-sc_front-prod
+          severity: CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+
+      - name: Logs en cas d'echec
+        if: failure()
+        run: docker logs sc_front_ci || true
+
+      - name: Nettoyage
+        if: always()
+        run: docker rm -f sc_front_ci || true

@@ -1,0 +1,70 @@
+/* ============================================================
+   NavActions — boutons flottants accueil / burger (layouts/default.vue)
+   ============================================================ */
+/* Colonne d'actions flottante (mobile / tablette), en haut a droite :
+   retour accueil au-dessus, burger en dessous. Le rail lateral prend le
+   relais a partir de 1200px. Quand le lien accueil est masque (page
+   d'accueil), le burger remonte tout seul en haut de la colonne. */
+.nav-actions {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 190;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-fab,
+.nav-home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(249, 249, 249, 0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(13, 13, 13, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(13, 13, 13, 0.16);
+}
+
+.nav-home img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.nav-fab {
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 11px;
+}
+
+.nav-fab span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.nav-fab--open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-fab--open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-fab--open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (min-width: 1200px) {
+  .nav-actions {
+    display: none;
+  }
+}

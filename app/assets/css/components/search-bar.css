@@ -1,0 +1,111 @@
+/* ============================================================
+   SearchBar
+   ============================================================ */
+.search-bar {
+  position: relative;
+}
+
+.search-bar__field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-card-bg);
+  border-radius: 100px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow-card);
+}
+
+.search-bar__icon {
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+
+.search-bar__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-body);
+  /* >= 16px effectif : evite le zoom auto du champ au focus sur iOS. */
+  font-size: var(--fs-base);
+  color: var(--color-text);
+}
+
+.search-bar__input::placeholder {
+  color: var(--color-muted);
+}
+
+.search-bar__panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--color-card-bg);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.search-bar__group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.search-bar__group-label {
+  font-family: var(--font-heading);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 4px;
+}
+
+.search-bar__result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 8px 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background var(--transition-base);
+}
+
+.search-bar__result:hover,
+.search-bar__result:focus-visible {
+  background: color-mix(in srgb, var(--color-primary-light) 8%, transparent);
+}
+
+.search-bar__result-label {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.search-bar__result-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: var(--color-muted);
+}
+
+.search-bar__empty {
+  font-size: var(--fs-sm);
+  color: var(--color-muted);
+  text-align: center;
+  margin: 0;
+  padding: 8px 0;
+}

@@ -1,0 +1,33 @@
+# Build multi-stage : image de prod, buildee a partir de
+# docker-compose.prod.yml. Dockerfile/start-container a la racine restent le
+# stack de dev (npm install + npm run dev sur bind mount).
+
+FROM node:22 AS build
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+FROM node:22-slim AS runtime
+
+WORKDIR /app
+
+ARG FRONT_PORT=3000
+
+ENV NODE_ENV=production
+
+# Nitro (preset node-server) bundle le serveur dans .output/ : pas besoin de
+# node_modules ni du code source a l'execution.
+COPY --from=build /app/.output ./.output
+
+# Utilisateur non root fourni par l'image node. .output/ reste a root : lisible,
+# non modifiable par le processus.
+USER node
+
+EXPOSE ${FRONT_PORT}
+
+CMD ["node", ".output/server/index.mjs"]

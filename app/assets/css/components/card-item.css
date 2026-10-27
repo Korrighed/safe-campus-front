@@ -1,0 +1,161 @@
+/* ============================================================
+   CardItem
+   ============================================================ */
+.card-item {
+  position: relative;
+  background: var(--theme-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  flex-shrink: 0;
+  width: 240px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 88px 16px 22px;
+  overflow: visible;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(13, 13, 13, 0.2);
+}
+
+.card-ninja {
+  position: absolute;
+  top: -52px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* anxiete/depression : le ninja partage le cadre avec un adversaire (scene de
+   combat), il occupe donc une part plus petite du visuel a taille de boite egale.
+   burn_out reutilise ninja_cigarette.png (identique a tabac) et reste donc a la
+   taille par defaut. */
+.card-ninja--anxiete,
+.card-ninja--depression {
+  width: 165px;
+  height: 165px;
+  top: -62px;
+}
+
+/* espace supplementaire sous la boite agrandie ci-dessus, pour que le ninja
+   ne chevauche pas le titre de la carte. burn_out garde son visuel a taille
+   par defaut mais recoit le meme padding pour que son titre reste aligne
+   avec celui des 2 autres cartes de la rangee. */
+.card-item--anxiete,
+.card-item--depression,
+.card-item--burn_out {
+  padding-top: 103px;
+}
+
+.ninja-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: float 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.2));
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lead);
+  font-weight: 700;
+  color: var(--color-text-light);
+  line-height: 1;
+  min-height: 2.5rem;
+  margin-bottom: 10px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.card-desc {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.55;
+  min-height: 4.65rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.card-actions__btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--color-text-light);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--transition-base);
+}
+
+.card-actions__btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+@media (min-width: 768px) {
+  .card-item {
+    width: auto;
+    min-height: 260px;
+    padding: 96px 20px 28px;
+  }
+
+  .card-ninja {
+    width: 150px;
+    height: 150px;
+    top: -58px;
+  }
+
+  .card-ninja--anxiete,
+  .card-ninja--depression {
+    width: 178px;
+    height: 178px;
+    top: -69px;
+  }
+
+  .card-item--anxiete,
+  .card-item--depression,
+  .card-item--burn_out {
+    padding-top: 113px;
+  }
+
+  .card-title {
+    font-size: var(--fs-h2);
+    min-height: 2.8rem;
+    margin-bottom: 16px;
+  }
+
+  .card-desc {
+    font-size: var(--fs-base);
+    min-height: 5.58rem;
+  }
+
+  .card-actions {
+    margin-top: 14px;
+  }
+}

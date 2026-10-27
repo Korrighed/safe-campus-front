@@ -1,0 +1,203 @@
+/* ============================================================
+   ContactMap — localisation
+   ============================================================ */
+/* Fond blanc pur (pas le blanc ceruse du reste du site) : la carte de localisation
+   et les cartes de contact tranchent mieux sur le degrade colore de .cp-page. */
+/* Enveloppe : colonne normale dans le flux, hote plein ecran une fois la
+   carte agrandie (position: fixed -> retiree du flux, .cp-main intact). */
+.cp-location-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.cp-location-wrap--expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: clamp(16px, 4vw, 48px);
+}
+
+.cp-location-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 13, 13, 0.6);
+}
+
+.cp-location {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.cp-location-wrap--expanded {
+  align-items: center;
+  justify-content: center;
+}
+
+.cp-location--expanded {
+  z-index: 1;
+  width: min(1100px, 100%);
+  height: 100%;
+  margin: auto;
+}
+
+.cp-location-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 18px 18px 14px;
+}
+
+.cp-location-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  font-weight: 400;
+  color: #1A1A2E;
+  line-height: 1.25;
+}
+
+.btn-locate {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: color-mix(in srgb, var(--theme-color, var(--color-primary-light)) 12%, transparent);
+  color: var(--theme-color, var(--color-primary-light));
+  border: none;
+  border-radius: 100px;
+  padding: 8px 14px;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition-base);
+}
+
+.btn-locate svg {
+  width: 14px;
+  height: 14px;
+}
+
+.btn-locate:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--theme-color, var(--color-primary-light)) 20%, transparent);
+}
+
+.btn-locate:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.btn-locate--active {
+  background: var(--theme-color, var(--color-primary-light));
+  color: var(--color-text-light);
+}
+
+.btn-locate--active:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--theme-color, var(--color-primary-light)) 85%, #0D0D0D);
+}
+
+.cp-location-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.cp-location-map {
+  width: 100%;
+  height: 260px;
+}
+
+.cp-location--expanded .cp-location-body {
+  min-height: 0;
+}
+
+.cp-location--expanded .cp-location-map {
+  height: 100%;
+}
+
+/* Icone d'agrandissement, en surimpression dans un coin libre de la carte
+   (le zoom Leaflet occupe le coin haut-gauche). */
+.cp-map-expand {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  background: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(13, 13, 13, 0.25);
+  color: #1A1A2E;
+  cursor: pointer;
+  transition: background var(--transition-base);
+}
+
+.cp-map-expand:hover {
+  background: #F0F0F5;
+}
+
+.cp-map-expand svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cp-geo-error {
+  padding: 0 18px 16px;
+  font-size: var(--fs-sm);
+  color: #E8314A;
+}
+
+/* Marqueur "Votre position" : forme et couleur distinctes des marqueurs
+   contacts (bleu du theme) -> pastille rose + halo pulsant. */
+.user-marker__dot {
+  position: absolute;
+  inset: 0;
+  width: 16px;
+  height: 16px;
+  background: #F0157F;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(13, 13, 13, 0.45);
+}
+
+.user-marker__pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  background: rgba(240, 21, 127, 0.35);
+  animation: user-marker-pulse 2s ease-out infinite;
+}
+
+@keyframes user-marker-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .user-marker__pulse {
+    animation: none;
+  }
+}
