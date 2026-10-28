@@ -24,8 +24,7 @@ services:
             NUXT_API_BASE_INTERNAL: '${NUXT_API_BASE_INTERNAL:-${NUXT_PUBLIC_API_BASE}}'
         # Point de depart, pas mesure en charge reelle (a ajuster selon le trafic
         # observe en production). Nettement sous le dev (2G) : plus de serveur Vite/HMR
-        # a alimenter, juste le serveur Nitro bundle (cf. docs/infra.md du back pour
-        # la mesure au repos en dev, 275 MiB, essentiellement due a Vite).
+        # a alimenter, juste le serveur Nitro bundle.
         deploy:
             resources:
                 limits:
