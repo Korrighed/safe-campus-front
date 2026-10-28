@@ -27,7 +27,7 @@ cd ../Safe-Campus-front && docker compose up -d
 
 Démarre `SC_Back`, `SC_Front`, `SC_Postgres` et `SC_Adminer` (deux stacks compose distinctes, réseau partagé). Voir le [README du back](../Safe-Campus-back/README.md) pour son `.env`.
 
-> Le front consomme l'API du back : `POST /api/login`, `GET /api/themes`, `GET /api/sous-themes/{ref}`, `GET /api/histoires/{ref}`. Contrats : [schema_bd.md du back](../Safe-Campus-back/docs/schema_bd.md#consommation-api).
+> Le front consomme l'API du back : `POST /api/login`, `GET /api/themes`, `GET /api/sous-themes/{ref}`, `GET /api/histoires/{ref}`. Contrats : [api.md du back](../Safe-Campus-back/docs/api.md).
 
 ### 2. Frontend seul (sans le back)
 
@@ -59,8 +59,7 @@ docker compose logs -f sc_front
 
 | Port | Service |
 |---|---|
-| `3000` | Nuxt dev server → http://localhost:3000 |
-| `24678` | Vite HMR |
+| `3000` (`FRONT_PORT`) | Nuxt dev server et WebSocket HMR de Vite → http://localhost:3000 |
 
 ---
 
@@ -87,9 +86,16 @@ Safe-Campus-front/
 ├── app/
 │   ├── pages/          Pages Nuxt (une page = une route)
 │   ├── components/     Composants Vue réutilisables
-│   ├── composables/    Composables useXxx()
+│   ├── composables/    Composables useXxx() (useApiBase, useAuth, useThemes)
 │   ├── layouts/        Layouts Nuxt
-│   └── assets/css/     Styles globaux
+│   ├── middleware/     auth.global.ts (portillon visiteur)
+│   ├── data/           Contenu statique (présentation)
+│   ├── types/          Types TypeScript (annuaire, histoire, svg)
+│   ├── utils/          Fonctions utilitaires
+│   └── assets/
+│       ├── css/        main.css + components/*.css + pages/*.css
+│       ├── icon/       Icônes SVG Heroicons
+│       └── images/     Logo et visuels
 ├── public/         Fichiers statiques
 ├── nuxt.config.ts  Configuration Nuxt
 ├── docker/
@@ -138,8 +144,8 @@ Lancer `npm run typecheck && npm run lint` en local avant de pousser évite un a
 
 ## Conventions
 
-- **Pas de `<style>` dans les `.vue`** — tout le CSS va dans `assets/css/main.css`
+- **Pas de `<style>` dans les `.vue`** — tout le CSS va dans `app/assets/css/` (`main.css`, `components/<nom>.css`, `pages/<page>.css`), détail dans [CLAUDE.md](CLAUDE.md)
 - **BEM** pour le nommage CSS : `.bloc__element--modificateur`
 - **CSS variables** pour toutes les valeurs partagées (couleurs, espacements, etc.)
 - **Ordre dans les composants** : imports → props & emits → state (`ref`/`reactive`) → computed → fonctions
-- **Appels API** : via `useRuntimeConfig().public.apiBase` pour l'URL de base
+- **Appels API** : via un composable, avec `useApiBase()` pour l'URL de base (adresse interne en SSR, publique dans le navigateur)
