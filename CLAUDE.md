@@ -22,7 +22,7 @@
 
 **Component order:** imports → props & emits → state (`ref`/`reactive`) → computed → functions.
 
-**API calls:** `$fetch()` through a composable (`useThemes`, `useAuth`…). Base URL from `useApiBase()`: internal Docker hostname during SSR, `runtimeConfig.public.apiBase` in the browser. The visitor token is stored in the `sc_token` cookie; read requests do not send it, because the back's read routes are public by design. The visitor login is a prototype-only gate for events, removed at the official launch (§ 4.1 of the back's `docs/securite-rgpd.md`). API contracts: [Safe-Campus-back/docs/schema_bd.md](../Safe-Campus-back/docs/schema_bd.md#consommation-api).
+**API calls:** `$fetch()` through a composable (`useThemes`, `useAuth`…). Base URL from `useApiBase()`: internal Docker hostname during SSR, `runtimeConfig.public.apiBase` in the browser. The visitor token is stored in the `sc_token` cookie; read requests do not send it, because the back's read routes are public by design. The visitor login is a prototype-only gate for events, removed at the official launch (§ 4.1 of the back's `docs/securite-rgpd.md`). The SSR uses `runtimeConfig.apiBaseInternal`, whose default is computed at **build** time in `nuxt.config.ts`: in production, `NUXT_API_BASE_INTERNAL` must be set at runtime (see the README), otherwise server-rendered pages query `http://localhost:8000` and answer 404. API contracts: § 3.3 of the back's [docs/cahier-des-charges-techniques.md](../safe-campus-back/docs/cahier-des-charges-techniques.md#33-api).
 
 **Navigation:** Nuxt file-based routing (`app/pages/`), `<NuxtLink>` and `navigateTo()`. Global auth middleware: `app/middleware/auth.global.ts`.
 
@@ -33,6 +33,7 @@
 - Workflow git flow : `feature/*` pour le dev, merge sur `dev` en `--no-ff`. `hotfix/*` créé depuis `main`.
 - Une fois une `feature/*` mergée dans `dev` et poussée sur `origin/dev`, supprimer la branche locale (`git branch -d`). Ne pas laisser de branches `feature/*` locales après clôture.
 - Avant de merger une branche `feature/*`, `bugfix/*`, `hotfix/*` ou autre sur `dev` ou `main` : proposer à l'utilisateur un dernier commit dédié, en fin de branche, à la vérification `typecheck` + `lint` (et aux correctifs de qualité de code que ça implique). Ne jamais merger sans avoir proposé ce commit.
+- La CI (`verif`) rejoue build, typecheck et lint sur chaque push et chaque PR ; elle ne remplace pas ce commit de vérification mais le confirme. `main` est protégée : PR obligatoire, checks `verif` et `approfondi` verts, `dev` à jour de `main` avant la PR. Voir le [README](README.md#intégration-continue).
 - Jamais de `Co-Authored-By` dans les messages de commit.
 - Format de message de commit obligatoire :
 
