@@ -123,7 +123,7 @@ Safe-Campus-front/
 
 Limites connues du front en ligne (suivi dans le [securite-rgpd.md](../Safe-Campus-back/docs/securite-rgpd.md) du back, § 10) :
 
-- aucun en-tête de sécurité HTTP posé par le front (S-05) et l'en-tête `x-powered-by: Nuxt` est exposé ;
+- en-têtes de sécurité posés par `routeRules` (S-05), sans CSP de scripts ; `x-powered-by: Nuxt` reste exposé (codé en dur dans Nuxt) ;
 - le cookie `sc_token` du portillon n'a pas l'attribut `Secure` ni `HttpOnly` (S-04, S-17) ;
 - les polices viennent de Google Fonts (S-08).
 
