@@ -2,6 +2,8 @@
 
 Interface utilisateur du projet SAE501. Construit avec **Nuxt 4** et **Vue 3**.
 
+Version : **1.0.0** ([historique des versions](CHANGELOG.md)).
+
 Dépôts GitHub : [Korrighed/safe-campus-front](https://github.com/Korrighed/safe-campus-front) (ce dépôt) et [Korrighed/safe-campus-back](https://github.com/Korrighed/safe-campus-back) (API, back-office et documentation du projet).
 
 > Ce repo fonctionne en binôme avec [safe-campus-back](https://github.com/Korrighed/safe-campus-back), mais possède son propre `docker-compose.yml` — les deux stacks se lancent indépendamment. Elles se partagent le réseau Docker `scback` (nom fixe, voir `docker-compose.yml`) : si les deux tournent, `sc_front` joint `sc_back` par son nom de conteneur ; sinon `sc_front` démarre quand même, seul le SSR côté API est mort.
