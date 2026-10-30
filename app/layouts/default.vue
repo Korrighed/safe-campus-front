@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import SideNav from '~/components/SideNav.vue'
 import NavDrawer from '~/components/NavDrawer.vue'
+import BackButton from '~/components/BackButton.vue'
 import IconArrowUp from '~/assets/icon/arrow-up.svg?component'
 
 // Menu global : present sur toutes les pages qui utilisent ce layout.
@@ -32,6 +33,9 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 <template>
   <div class="layout">
     <SideNav :themes="themes" />
+
+    <!-- Retour page precedente : sur toutes les pages sauf l'accueil. -->
+    <BackButton v-if="route.path !== '/'" />
 
     <!-- Colonne d'actions flottante (mobile / tablette) : retour accueil
          au-dessus, burger en dessous. Le lien accueil est masque sur la
