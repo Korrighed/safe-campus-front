@@ -1,0 +1,54 @@
+/* ============================================================
+   BackButton — bouton retour page precedente (layouts/default.vue)
+   ============================================================ */
+/* Pendant a gauche de la colonne .nav-actions : meme fond translucide,
+   meme hauteur et meme rayon. Masque sur la page d'accueil. A partir de
+   1200px, il se decale pour laisser la place au rail lateral. */
+.back-button {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 190;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 14px 0 11px;
+  background: rgba(249, 249, 249, 0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(13, 13, 13, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(13, 13, 13, 0.16);
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  transition: var(--transition-base);
+}
+
+.back-button:hover {
+  color: var(--color-primary-light);
+}
+
+.back-button:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 2px;
+}
+
+.back-button__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+
+.back-button:hover .back-button__icon {
+  transform: translateX(-3px);
+}
+
+@media (min-width: 1200px) {
+  .back-button {
+    top: 16px;
+    left: calc(var(--sidenav-rail) + 16px);
+  }
+}

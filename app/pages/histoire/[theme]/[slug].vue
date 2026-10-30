@@ -44,11 +44,14 @@ useHead({ title: state.status === 'ready' ? state.histoire.titre : sousTheme.lib
 
 const color = '#4260e6'
 
-// Page d'ou l'on vient (?retour=/contact/...). Chemin interne uniquement,
-// sinon un lien forge redirigerait hors du site.
+// Page de la thematique d'ou l'on vient (?retour=/contact/... ou /ressources/...).
+// Chemin interne uniquement, sinon un lien forge redirigerait hors du site.
+// Sans ?retour (lien direct), on renvoie vers la page contact de la thematique.
 const retour = computed(() => {
   const chemin = route.query.retour
-  return typeof chemin === 'string' && chemin.startsWith('/') && !chemin.startsWith('//') ? chemin : '/'
+  return typeof chemin === 'string' && chemin.startsWith('/') && !chemin.startsWith('//')
+    ? chemin
+    : `/contact/${route.params.theme}/${route.params.slug}`
 })
 
 const sceneId = ref<number | null>(state.status === 'ready' ? state.histoire.scene_initiale_id : null)
@@ -173,7 +176,7 @@ function toggleExpandedContact(contactRef: string) {
 
       <NuxtLink :to="retour" class="histoire__quitter">
         <IconArrowLeft class="histoire__icon" aria-hidden="true" />
-        Quitter l'histoire
+        Revenir à la thématique {{ sousTheme.libelle }}
       </NuxtLink>
     </div>
 
