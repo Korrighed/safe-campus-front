@@ -39,6 +39,21 @@ export default defineNuxtConfig({
     },
   },
 
+  // En-tetes de securite (S-05). geolocation=(self) : ContactMap.vue localise l'utilisateur.
+  // CSP limitee aux directives sans effet sur le rendu (payload SSR inline, tuiles Leaflet).
+  routeRules: {
+    '/**': {
+      headers: {
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+        'X-Frame-Options': 'DENY',
+        'Permissions-Policy': 'camera=(), microphone=(), geolocation=(self)',
+        'Content-Security-Policy': "frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'",
+        'Strict-Transport-Security': 'max-age=31536000',
+      },
+    },
+  },
+
   vite: {
     plugins: [svgLoader()],
     // Leaflet n'est tire que par la page contact (import dynamique). Le pre-bundler
