@@ -39,7 +39,7 @@ export default defineNuxtConfig({
     },
   },
 
-  // En-tetes de securite (S-05). geolocation=(self) : ContactMap.vue localise l'utilisateur.
+  // En-tetes de securite. geolocation=(self) : ContactMap.vue localise l'utilisateur.
   // CSP limitee aux directives sans effet sur le rendu (payload SSR inline, tuiles Leaflet).
   routeRules: {
     '/**': {

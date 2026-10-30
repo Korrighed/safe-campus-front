@@ -1,7 +1,7 @@
 // Presentation front-only, indexee par le `ref` renvoye par l'API
 // (GET /api/themes, GET /api/sous-themes/{ref}). Le contenu editorial
 // (libelle, resume, article, contacts...) vient du back, voir
-// Safe-Campus-back/docs/textes-front.md.
+// safe-campus-back/docs/cahier-des-charges-techniques.md § 3.3.
 
 interface ThemePresentation {
   color: string
